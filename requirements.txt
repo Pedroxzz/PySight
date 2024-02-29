@@ -1,0 +1,5 @@
+asarPy==1.0.1
+setuptools==65.5.0
+pip==24.0
+opencv-python==4.9.0.80
+numpy==1.26.4
