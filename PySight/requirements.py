@@ -1,7 +1,6 @@
 import pkg_resources
 import subprocess
 
-
 def create_requirements_file(file_path='requirements.txt'):
     # Obtém todos os pacotes instalados
     installed_packages = pkg_resources.working_set
@@ -20,7 +19,8 @@ def install_missing_packages(file_path='requirements.txt'):
             requirements = file.read().splitlines()
 
         # Filtra os pacotes já instalados
-        missing_packages = [req for req in requirements if req not in pkg_resources.working_set]
+        installed_packages = [pkg.key for pkg in pkg_resources.working_set]
+        missing_packages = [req for req in requirements if req.split('==')[0] not in installed_packages]
 
         # Pergunta ao usuário se deseja instalar os pacotes ausentes
         if missing_packages:
@@ -49,8 +49,8 @@ def install_packages(packages):
         print("Pacotes instalados com sucesso.")
     except Exception as e:
         print(f"Erro ao instalar pacotes: {e}")
-        
+
 if __name__ == "__main__":
     create_requirements_file()
-    # install_missing_packages()
-    print("Arquivo requirements.txt criado com sucesso.")
+    install_missing_packages()
+    print("Arquivo requirements.txt criado e pacotes instalados conforme necessário.")
